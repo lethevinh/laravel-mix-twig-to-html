@@ -23,6 +23,7 @@ class TwigToHtml {
       {
         files: [],
         fileBase: undefined,
+        dest: "",
         twigOptions: null,
         htmlOptions: null,
         htmlWebpack: null,
@@ -117,7 +118,7 @@ class TwigToHtml {
         )}.html`;
         return {
           ...item,
-          filename: join(prefixPath, newFileName)
+          filename: join(this.config.dest, prefixPath, newFileName)
         };
       });
 
