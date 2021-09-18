@@ -27,7 +27,8 @@ class TwigToHtml {
         twigOptions: null,
         htmlOptions: null,
         htmlWebpack: null,
-        enabled: true
+        enabled: true,
+        enabledFileStructure: true
       },
       config
     );
@@ -51,19 +52,7 @@ class TwigToHtml {
           loader: "html-loader",
           options: assign(
             {
-              minify: mix.inProduction(),
-              attrs: [
-                ":srcset",
-                "img:src",
-                "audio:src",
-                "video:src",
-                "video:poster",
-                "track:src",
-                "embed:src",
-                "source:src",
-                "input:src",
-                "object:data"
-              ]
+              minimize: mix.inProduction(),
             },
             this.config.htmlOptions
           )
@@ -134,7 +123,9 @@ class TwigToHtml {
 
         return new HtmlWebpackPlugin(options);
       });
-
+    if (this.config.enabledFileStructure) {
+      return createPages(addFilename(normaliseFileConfig(this.config.files)));
+    }
     return createPages(
       addFilename(removeUnderscorePaths(normaliseFileConfig(this.config.files)))
     );
